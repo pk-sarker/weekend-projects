@@ -1,0 +1,76 @@
+# Gringotts Bank Integration Design
+
+There are few key point to mentions about the solution:
+- First of all the focused is on the correctness of the result with minimum computation. Tried to optimize time complexity of the solution.
+- Considered the size of the files, instead of loading full file in memory, file stream is used and read a single line at a time.
+- Use of parallel processing/asynchronous processing to process multiple file at the same time which will reduce total running time and optimize resource usages.
+- Kept the code readable and use of lint to check code quality.
+- Focused on SOLID principal while coding.
+
+Updated the print file name from `printReport.py` to `print_report.py` to be consistent with file naming convention.
+The commands will be now use `print_report.py`
+python3 print_report.py acme_bank
+python3 print_report.py sweet_bank
+python3 print_report.py gringotts_bank
+
+
+Assumptions:
+- All the transactions in the file are complete as described in the documentations.
+- Provided information is valid as mentioned, like the Bank id position in the batch transaction, account number in source or destination account.
+- If multiple files provided each of them will be processed separately and independent of each other, there is no dependency between files or results.
+- If multiple files provided no aggregation is required, solution will change a little if aggregation is required.
+
+Parsing Logic:
+- Based on the provided documentation, transactions will be in batch and each transaction is represented by
+    [Transaction ID, Source Account, Destination Account,Transfer Amount] and each in a separate line. So it is
+    required to read 4 lines to for each transaction details.
+- As the file read one line at a time, a counter is maintained to identify if all information for a transaction is
+    read. Transaction average is calculated when the counter reach at 4 and then reset the counter to zero.
+    Example:
+    GTTB8627828778253 -
+    776ecf46-196f-4060-897d-ef32cf474408    # transaction line 1: Transaction UUID
+    100000003WG100000001                    # transaction line 2: Source account details
+    100000000PG100000000                    # transaction line 3: Destination account details
+    USD12026565                             # transaction line 4: Transaction amount
+    1bbb7aa8-ae5e-41d3-b831-a81a12351be1    # transaction line 1: Transaction UUID
+    100000001WG100000000                    # transaction line 2: Source account details
+    100000002PP100000001                    # transaction line 3: Destination account details
+    USD46479642                             # transaction line 4: Transaction amount
+
+
+Data Structure:
+The task was to get the source accounts with maximum average transactions, so all the transactions
+are kept in a dictionary where the key is source account. Here is the structure:
+
+    source_account_transactions {
+        source_account_a: {
+            transactions: [
+                {
+                    s_bank_id: "",
+                    s_ac_holder: "",
+                    s_ac_id:  "",
+                    d_bank_id: "",
+                    d_ac_holder: "",
+                    d_ac_id: "",
+                    amount: 0.0,
+                    currency:  ""
+                }
+            ],
+            sum_of_trans: 0,
+            trans_count: 0,
+            avg_trans: 0
+        },
+        source_account_b: {
+        ...
+
+        ...
+        }
+    }
+
+    - For each source account average transaction and sum of the transactions are maintained and updated
+        as soon as there is new transaction from same account. This reduces the cost to calculated the average
+        transaction of each account after parsing whole file.
+    - Additional information were parsed for future usages.
+
+Complexity Analysis:
+ - Time complexity of the solution is O(L+N), where L is number of lines in each file and N is the number of unique source accounts.

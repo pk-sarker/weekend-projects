@@ -1,0 +1,82 @@
+﻿{
+   "batches": [
+      {
+         "id": 1,
+         "transactions": [
+            {
+               "id": 1,
+               "source_account": 40,
+               "currency": "USD",
+               "amount_in_cents": 81980,
+               "desination_account": 13
+            },
+            {
+               "id": 2,
+               "source_account": 12,
+               "currency": "USD",
+               "amount_in_cents": 141982,
+               "desination_account": 35
+            }
+         ]
+      },
+      {
+         "id": 2,
+         "transactions": [
+            {
+               "id": 3,
+               "source_account": 40,
+               "currency": "USD",
+               "amount_in_cents": 81981,
+               "desination_account": 15
+            },
+            {
+               "id": 4,
+               "source_account": 31,
+               "currency": "USD",
+               "amount_in_cents": 1234,
+               "desination_account": 15
+            },
+            {
+               "id": 5,
+               "source_account": 35,
+               "currency": "USD",
+               "amount_in_cents": 43564,
+               "desination_account": 15
+            }
+         ]
+      },
+      {
+         "id": 3,
+         "transactions": [
+            {
+               "id": 6,
+               "source_account": 17,
+               "currency": "USD",
+               "amount_in_cents": 100500,
+               "desination_account": 15
+            },
+            {
+               "id": 7,
+               "source_account": 18,
+               "currency": "USD",
+               "amount_in_cents": 8034,
+               "desination_account": 17
+            },
+            {
+               "id": 8,
+               "source_account": 17,
+               "currency": "USD",
+               "amount_in_cents": 98564,
+               "desination_account": 15
+            },
+            {
+               "id": 9,
+               "source_account": 12,
+               "currency": "USD",
+               "amount_in_cents": 30564,
+               "desination_account": 40
+            }
+         ]
+      }
+   ]
+}
